@@ -1,4 +1,4 @@
-# Campus_Event_Organizer
+# Campus Event Organizer
 
 ## Group Members
 
