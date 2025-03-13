@@ -39,16 +39,26 @@ The app provides an interactive platform where students can explore upcoming eve
 - Django REST API: Provides RESTful services for event and user management.  
 
 ### **Database**  
-- MySQL: Stores user data, events, and feedback.  
+- PostgreSQL: Stores user data, events, and feedback.  
 
 ## **Testing**  
 - Widget, Unit, and Integration Testing to ensure app reliability.  
 
 ### **Setup Prerequisites**  
-- Flutter SDK  
-- Python (Django)  
-- MySQL  
-- Git  
+
+### For Jetpack Compose Version:
+- 🏗 **Android Studio** with Jetpack Compose support  
+- 💻 **Kotlin**  
+- 🐘 **PostgreSQL**  
+- 🐍 **Python (Django)**  
+- 🌐 **Git**  
+
+### For Flutter Version:
+- 🪄 **Flutter SDK**  
+- ⚙️ **Dart**  
+- 🐘 **PostgreSQL**  
+- 🐍 **Python (Django)**  
+- 🌐 **Git**  
 
 ## **Usage**  
 
