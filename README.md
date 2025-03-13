@@ -7,7 +7,7 @@
 | Dame Abera            | UGR/0123/15 | 2       |
 | Eyerusalem Teklebrhan | UGR/6149/15 | 2       |
 | Kaku Amsalu           | UGR/3710/15 | 1       |
-| Nuhamein Tariku       | UGR/2940/15 | 2       |
+| Nuhamien Tariku       | UGR/2940/15 | 2       |
 | Yamlak Negash         | UGR/2910/15 | 2       |
 
 ## **Project Overview**  
