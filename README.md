@@ -33,7 +33,8 @@ The app provides an interactive platform where students can explore upcoming eve
 ## **Technologies Used**  
 
 ### **Frontend**  
-- Flutter: Cross-platform mobile development framework.  
+- **Jetpack Compose**: Modern toolkit for building native Android UI.  
+-  **Flutter**: Cross-platform mobile development framework.  
 
 ### **Backend**  
 - Django REST API: Provides RESTful services for event and user management.  
@@ -47,18 +48,18 @@ The app provides an interactive platform where students can explore upcoming eve
 ### **Setup Prerequisites**  
 
 ### For Jetpack Compose Version:
-- 🏗 **Android Studio** with Jetpack Compose support  
-- 💻 **Kotlin**  
+-  **Android Studio** with Jetpack Compose support  
+-  **Kotlin**  
 - 🐘 **PostgreSQL**  
 - 🐍 **Python (Django)**  
-- 🌐 **Git**  
+-  **Git**  
 
 ### For Flutter Version:
-- 🪄 **Flutter SDK**  
-- ⚙️ **Dart**  
+-  **Flutter SDK**  
+-  **Dart**  
 - 🐘 **PostgreSQL**  
 - 🐍 **Python (Django)**  
-- 🌐 **Git**  
+-  **Git**  
 
 ## **Usage**  
 
