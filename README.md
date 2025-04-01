@@ -65,16 +65,4 @@ GreenLeaf provides essential tools for documenting plant species and tracking fi
 - 🐍 **Python (Django)**  
 -  **Git**  
 
-## **Usage**  
-
-1. **Unregistered Users**:  
-   - Open the app to view upcoming campus events.  
-
-2. **Registered Users (Students)**:  
-   - Sign up and log in.  
-   - Create or join events.  
-   - Leave feedback on attended events.  
-
-3. **Admins (Event Organizers)**:  
-   - Manage event listings.  
-   - Moderate student participation and feedback.  
+ 
