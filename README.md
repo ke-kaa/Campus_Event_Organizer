@@ -1,4 +1,4 @@
-# Campus Event Organizer
+# GreenLeaf: My Personal Herbarium (አረንጓዴ ቅጠል፡ የእፅዋት መዝገብ)
 
 ## Group Members
 
@@ -11,24 +11,28 @@
 | Yamlak Negash         | UGR/2910/15 | 2       |
 
 ## **Project Overview**  
-The **Campus Event Organizer** is a mobile application designed for university students to create, manage, and participate in campus events. 
-The app provides an interactive platform where students can explore upcoming events, register as participants, and share feedback. 
+**GreenLeaf** is a mobile application designed for plant enthusiasts, researchers, and nature lovers. It allows users to record plant species, log field observations, and manage botanical data with ease.
 
-## **Features**  
+## Features
 
-### **For Unregistered Users**  
-- Can browse a list of upcoming campus events.  
-- Cannot register for or interact with events.  
+GreenLeaf provides essential tools for documenting plant species and tracking field observations, making it easier to catalog botanical data.
 
-### **For Registered Users (Students)**  
-- Must create an account and log in.  
-- Can create, update, and delete events (if authorized).  
-- Can register for events and track their participation.  
-- Can leave feedback on past events.  
+### 🌿 Plant Species Records
 
-### **For Admins (Event Organizers)**  
-- Can manage events (CRUD operations).  
-- Can moderate user participation and feedback.  
+- Add, view, edit, and delete plant records.
+- Store details such as:
+  - **Common name**
+  - **Scientific classification**
+  - **Habitat**
+  - **Description**
+
+### 📌 Field Observations
+
+- Log and edit notes on plant sightings.
+- Record observations with:
+  - **Date and time**
+  - **Location details**
+  - **Additional notes**
 
 ## **Technologies Used**  
 
