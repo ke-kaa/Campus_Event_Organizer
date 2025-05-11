@@ -1,5 +1,4 @@
-
-# Create your models here.
+# Create your models here
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth import get_user_model
