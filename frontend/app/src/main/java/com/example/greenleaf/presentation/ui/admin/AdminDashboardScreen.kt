@@ -98,3 +98,13 @@ fun AdminDashboardScreen(
                                 )
                             },
                             colors = AssistChipDefaults.assistChipColors(
+                                containerColor = if (user.isAdmin) Color(0xFF00C48C) else Color.Gray
+                            )
+                        )
+                    }
+                    HorizontalDivider()
+                }
+            }
+        }
+    }
+}
