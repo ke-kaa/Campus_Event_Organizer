@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -94,30 +95,12 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Password field
-//            OutlinedTextField(
-//                value = uiState.password,
-//                onValueChange = viewModel::onPasswordChanged,
-//                placeholder = { Text("Password", color = Color.Gray) },
-//                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null, tint = Color.Gray) },
-//                visualTransformation = PasswordVisualTransformation(),
-//                shape = RoundedCornerShape(25.dp),
-//                colors = TextFieldDefaults.colors(
-//                    focusedContainerColor = Color(0xFFDFFFE0),
-//                    unfocusedContainerColor = Color(0xFFDFFFE0),
-//                    focusedIndicatorColor = Color.Transparent,
-//                    unfocusedIndicatorColor = Color.Transparent,
-//                    focusedTextColor = Color.Black,
-//                    unfocusedTextColor = Color.Black
-//                ),
-//                modifier = Modifier.fillMaxWidth(),
-//                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
-//            )
-
             GreenInputField(
                 value = uiState.password,
                 onValueChange = { viewModel.updatePassword(it) },
                 label = "Password",
-                icon = Icons.Default.Lock
+                icon = Icons.Default.Lock,
+                isPassword = true
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -169,16 +152,15 @@ fun LoginScreen(
     }
 }
 
-
-
 @Composable
 fun GreenInputField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    isPassword: Boolean = false
 ) {
-    key(label) { // Add key outside the OutlinedTextField
+    key(label) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -188,7 +170,7 @@ fun GreenInputField(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFDFFFE1), shape = RoundedCornerShape(16.dp)), // light green
+                .background(Color(0xFFDFFFE1), shape = RoundedCornerShape(16.dp)),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
@@ -196,7 +178,9 @@ fun GreenInputField(
                 errorBorderColor = Color.Transparent
             ),
             shape = RoundedCornerShape(16.dp),
-            singleLine = true
+            singleLine = true,
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+            keyboardOptions = if (isPassword) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions.Default
         )
     }
 }

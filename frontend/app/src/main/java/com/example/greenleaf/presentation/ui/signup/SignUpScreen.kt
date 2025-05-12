@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -18,6 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -112,7 +116,8 @@ fun SignUpScreen(
                     value = uiState.password,
                     onValueChange = { viewModel.onEvent(SignUpEvent.PasswordChanged(it)) },
                     label = "Password",
-                    icon = Icons.Default.Lock
+                    icon = Icons.Default.Lock,
+                    isPassword = true
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -121,7 +126,8 @@ fun SignUpScreen(
                     value = uiState.confirmPassword,
                     onValueChange = { viewModel.onEvent(SignUpEvent.ConfirmPasswordChanged(it)) },
                     label = "Confirm Password",
-                    icon = Icons.Default.Lock
+                    icon = Icons.Default.Lock,
+                    isPassword = true
                 )
 
                 uiState.error?.let {
@@ -155,9 +161,10 @@ fun GreenInputField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    isPassword: Boolean = false
 ) {
-    key(label) { // Add key outside the OutlinedTextField
+    key(label) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
@@ -167,7 +174,7 @@ fun GreenInputField(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFDFFFE1), shape = RoundedCornerShape(16.dp)), // light green
+                .background(Color(0xFFDFFFE1), shape = RoundedCornerShape(16.dp)),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
@@ -175,7 +182,9 @@ fun GreenInputField(
                 errorBorderColor = Color.Transparent
             ),
             shape = RoundedCornerShape(16.dp),
-            singleLine = true
+            singleLine = true,
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+            keyboardOptions = if (isPassword) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions.Default
         )
     }
 }
