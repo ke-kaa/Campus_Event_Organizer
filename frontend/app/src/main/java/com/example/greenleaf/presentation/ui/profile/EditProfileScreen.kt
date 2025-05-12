@@ -266,7 +266,7 @@ contentDescription = "Profile photo",
                                 Box {
                                     TextField(
                                         value = user!!.gender.orEmpty(),
-                                        onValueChange = {},
+                                        onValueChange = { },
                                         readOnly = true,
                                         singleLine = true,
                                         modifier = Modifier
@@ -276,10 +276,7 @@ contentDescription = "Profile photo",
                                             }
                                             .clickable { expanded = true },
                                         trailingIcon = {
-                                            Icon(
-                                                imageVector = Icons.Default.ArrowDropDown,
-                                                contentDescription = null
-                                            )
+                                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Select gender")
                                         },
                                         colors = TextFieldDefaults.colors(
                                             focusedIndicatorColor = Color.Black,

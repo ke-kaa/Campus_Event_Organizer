@@ -96,8 +96,7 @@ fun ObservationDetailScreen(
                                 .height(280.dp)
                         )
                         IconButton(
-
-onClick = { navController.popBackStack() },
+                            onClick = { navController.popBackStack() },
                             modifier = Modifier
                                 .padding(16.dp)
                                 .size(36.dp)
