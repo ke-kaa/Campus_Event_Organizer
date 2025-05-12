@@ -1,9 +1,5 @@
 package com.example.greenleaf.presentation.ui.profile
-
 import android.net.Uri
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TextField
-//   dameabera11@gmail.com  password
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,15 +9,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,14 +22,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.greenleaf.presentation.components.MainBottomBar
 import com.example.greenleaf.presentation.viewmodels.EditProfileViewModel
-import androidx.compose.ui.layout.onGloballyPositioned
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,27 +37,22 @@ fun EditProfileScreen(
 ) {
     val context = LocalContext.current
 
-    // IMAGE PICKER STATE & LAUNCHER
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri -> selectedImageUri = uri }
     )
 
-    // STATE
     val user by viewModel.user.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
     val isSaved by viewModel.isSaved.collectAsState()
-    var expanded by remember { mutableStateOf(false) }
 
-    // NAVIGATE UP ON SAVE
     LaunchedEffect(isSaved) {
         if (isSaved) navController.navigateUp()
     }
 
-
-Scaffold(
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Edit Profile") },
@@ -97,6 +82,7 @@ Scaffold(
                 isLoading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
+
                 error != null -> {
                     Column(
                         modifier = Modifier
@@ -116,6 +102,7 @@ Scaffold(
                         }
                     }
                 }
+
                 user != null -> {
                     Column(
                         modifier = Modifier
@@ -123,7 +110,6 @@ Scaffold(
                             .padding(16.dp)
                             .verticalScroll(rememberScrollState())
                     ) {
-                        // PROFILE IMAGE
                         Column(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -156,9 +142,7 @@ Scaffold(
                                 } else if (!user!!.profileImage.isNullOrEmpty()) {
                                     AsyncImage(
                                         model = user!!.profileImage,
-
-
-contentDescription = "Profile photo",
+                                        contentDescription = "Profile photo",
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -182,7 +166,6 @@ contentDescription = "Profile photo",
 
                         Spacer(Modifier.height(24.dp))
 
-                        // First Name
                         Text(
                             "First Name",
                             style = MaterialTheme.typography.bodySmall,
@@ -204,7 +187,6 @@ contentDescription = "Profile photo",
 
                         Spacer(Modifier.height(16.dp))
 
-                        // Last Name
                         Text(
                             "Last Name",
                             style = MaterialTheme.typography.bodySmall,
@@ -226,12 +208,10 @@ contentDescription = "Profile photo",
 
                         Spacer(Modifier.height(24.dp))
 
-                        // BIRTHDATE & GENDER
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            // Birth Date
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     "Birth Date",
@@ -251,72 +231,49 @@ contentDescription = "Profile photo",
                                         unfocusedContainerColor = Color.Transparent,
                                         focusedContainerColor = Color.Transparent
                                     )
-
-
-)
+                                )
                             }
-                            // Gender
+
+                            // >>> REPLACED GENDER DROPDOWN ONLY
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     "Gender",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color.Gray
                                 )
-                                var dropdownWidth by remember { mutableStateOf(0) }
-                                Box {
+                                var expanded by remember { mutableStateOf(false) }
+                                val options = listOf("Male", "Female")
+
+                                ExposedDropdownMenuBox(
+                                    expanded = expanded,
+                                    onExpandedChange = { expanded = !expanded }
+                                ) {
                                     TextField(
-                                        value = user!!.gender.orEmpty(),
-                                        onValueChange = { },
                                         readOnly = true,
-                                        singleLine = true,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .onGloballyPositioned { coordinates ->
-                                                dropdownWidth = coordinates.size.width
-                                            }
-                                            .clickable { expanded = true },
+                                        value = user!!.gender.orEmpty(),
+                                        onValueChange = {},
                                         trailingIcon = {
-                                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Select gender")
+                                            ExposedDropdownMenuDefaults.TrailingIcon(expanded)
                                         },
-                                        colors = TextFieldDefaults.colors(
+                                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                                        colors = ExposedDropdownMenuDefaults.textFieldColors(
                                             focusedIndicatorColor = Color.Black,
-                                            unfocusedIndicatorColor = Color.Gray,
-                                            disabledIndicatorColor = Color.LightGray,
-                                            unfocusedContainerColor = Color.Transparent,
-                                            focusedContainerColor = Color.Transparent
+                                            unfocusedIndicatorColor = Color.Gray
                                         )
                                     )
-                                    DropdownMenu(
+                                    ExposedDropdownMenu(
                                         expanded = expanded,
-                                        onDismissRequest = { expanded = false },
-                                        modifier = Modifier
-                                            .width(with(LocalDensity.current) { dropdownWidth.toDp() })
-                                            .background(MaterialTheme.colorScheme.surface)
+                                        onDismissRequest = { expanded = false }
                                     ) {
-                                        DropdownMenuItem(
-                                            text = { 
-                                                Text(
-                                                    text = "Male",
-                                                    color = MaterialTheme.colorScheme.onSurface
-                                                ) 
-                                            },
-                                            onClick = {
-                                                viewModel.updateGender("Male")
-                                                expanded = false
-                                            }
-                                        )
-                                        DropdownMenuItem(
-                                            text = { 
-                                                Text(
-                                                    text = "Female",
-                                                    color = MaterialTheme.colorScheme.onSurface
-                                                ) 
-                                            },
-                                            onClick = {
-                                                viewModel.updateGender("Female")
-                                                expanded = false
-                                            }
-                                        )
+                                        options.forEach { selection ->
+                                            DropdownMenuItem(
+                                                text = { Text(selection) },
+                                                onClick = {
+                                                    viewModel.updateGender(selection)
+                                                    expanded = false
+                                                }
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -324,7 +281,6 @@ contentDescription = "Profile photo",
 
                         Spacer(Modifier.height(24.dp))
 
-                        // EMAIL
                         Text(
                             "Email",
                             style = MaterialTheme.typography.bodySmall,
@@ -343,13 +299,10 @@ contentDescription = "Profile photo",
                                 unfocusedContainerColor = Color.Transparent,
                                 focusedContainerColor = Color.Transparent
                             )
-
                         )
 
                         Spacer(Modifier.height(24.dp))
 
-
-// MOBILE
                         Text(
                             "Mobile",
                             style = MaterialTheme.typography.bodySmall,
@@ -368,8 +321,8 @@ contentDescription = "Profile photo",
                                 unfocusedContainerColor = Color.Transparent,
                                 focusedContainerColor = Color.Transparent
                             )
-
                         )
+
                         Spacer(Modifier.height(16.dp))
                     }
                 }
@@ -377,3 +330,4 @@ contentDescription = "Profile photo",
         }
     }
 }
+
