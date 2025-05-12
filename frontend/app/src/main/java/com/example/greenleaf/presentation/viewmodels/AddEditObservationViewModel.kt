@@ -73,7 +73,7 @@ class AddEditObservationViewModel @Inject constructor(
     }
 
 
-fun loadObservation(id: String) {
+    fun loadObservation(id: String) {
         viewModelScope.launch {
             isLoading.value = true
             try {
@@ -131,11 +131,11 @@ fun loadObservation(id: String) {
     fun onNotesChange(value: String) {
         observation = observation.copy(note = value)
     }
-    /
+    /**
      * Call this before saveObservation() to convert the picked Uri into
      * a Base64 string and store it in the observationImageUrl field.
      */
-    / Convert picked Uri → Base64 and store it */
+    /** Convert picked Uri → Base64 and store it */
     fun onImageSelected(uri: Uri?, ctx: Context) {
         uri?.let {
             val bytes = ctx.contentResolver.openInputStream(it)?.readBytes()
@@ -150,8 +150,8 @@ fun loadObservation(id: String) {
         imageUri: Uri?,
         onSuccess: (String) -> Unit
     ) {
-        if (selectedPlant == null 
-            observation.date.isBlank() 
+        if (selectedPlant == null ||
+            observation.date.isBlank() ||
             observation.time.isBlank() ||
             observation.location.isBlank()) {
             error.value = "Please fill in all required fields"
@@ -170,7 +170,7 @@ fun loadObservation(id: String) {
                 val locationPart = observation.location.toPart()
                 val notePart     = observation.note?.toPart()
 
-// 2) build image part from Uri
+                // 2) build image part from Uri
                 val imagePart: MultipartBody.Part? = imageUri?.let { uri ->
                     val stream = context.contentResolver.openInputStream(uri)!!
                     val bytes  = stream.readBytes()
@@ -221,4 +221,3 @@ fun loadObservation(id: String) {
     }
 
 }
-

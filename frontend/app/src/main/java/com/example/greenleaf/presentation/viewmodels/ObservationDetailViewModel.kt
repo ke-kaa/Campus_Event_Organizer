@@ -25,7 +25,7 @@ class ObservationDetailViewModel @Inject constructor(
     var error by mutableStateOf<String?>(null)
         private set
 
-    / Load a single observation for details */
+    /* Load a single observation for details */
     fun loadObservation(id: String) {
         if (id.isBlank()) {
             error = "Invalid observation ID"
@@ -73,7 +73,7 @@ class ObservationDetailViewModel @Inject constructor(
         }
     }
 
-    / Delete and clear */
+    /* Delete and clear */
     fun deleteObservation(id: String) {
         if (id.isBlank()) {
             error = "Invalid observation ID"

@@ -89,12 +89,12 @@ class AddEditPlantViewModel @Inject constructor(
 
 
     fun savePlant(context: Context, imageUri: Uri?, onSuccess: (String) -> Unit) {
-        if (commonName.value.isBlank()  scientificName.value.isBlank()  habitat.value.isBlank()) {
+        if (commonName.value.isBlank() || scientificName.value.isBlank() || habitat.value.isBlank()) {
             error.value = "Please fill in all required fields"
             return
         }
 
-viewModelScope.launch {
+        viewModelScope.launch {
             isLoading.value = true
             error.value = null
             try {

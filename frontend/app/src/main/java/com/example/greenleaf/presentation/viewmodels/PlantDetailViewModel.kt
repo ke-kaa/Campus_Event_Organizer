@@ -25,7 +25,7 @@ class PlantDetailViewModel @Inject constructor(
     var error by mutableStateOf<String?>(null)
         private set
 
-    / Load a single plant for details */
+    /* Load a single plant for details */
     fun loadPlant(id: String) {
         if (id.isBlank()) {
             error = "Invalid plant ID"
@@ -73,7 +73,7 @@ class PlantDetailViewModel @Inject constructor(
         }
     }
 
-    / Delete and clear */
+    /* Delete and clear */
     fun deletePlant(id: String) {
         if (id.isBlank()) {
             error = "Invalid plant ID"
