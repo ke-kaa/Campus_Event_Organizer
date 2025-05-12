@@ -30,12 +30,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.greenleaf.presentation.components.MainBottomBar
 import com.example.greenleaf.presentation.viewmodels.EditProfileViewModel
+import androidx.compose.ui.layout.onGloballyPositioned
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -180,20 +182,15 @@ contentDescription = "Profile photo",
 
                         Spacer(Modifier.height(24.dp))
 
-                        // NAME
+                        // First Name
                         Text(
-                            "Name",
+                            "First Name",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.Gray
                         )
                         TextField(
-                            value = "${user!!.firstName.orEmpty()} ${user!!.lastName.orEmpty()}",
-                            onValueChange = { full ->
-                                val first = full.substringBefore(" ")
-                                val last = full.substringAfter(" ")
-                                viewModel.updateFirstName(first)
-                                viewModel.updateLastName(last)
-                            },
+                            value = user!!.firstName.orEmpty(),
+                            onValueChange = { viewModel.updateFirstName(it) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.colors(
@@ -203,7 +200,28 @@ contentDescription = "Profile photo",
                                 unfocusedContainerColor = Color.Transparent,
                                 focusedContainerColor = Color.Transparent
                             )
+                        )
 
+                        Spacer(Modifier.height(16.dp))
+
+                        // Last Name
+                        Text(
+                            "Last Name",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                        TextField(
+                            value = user!!.lastName.orEmpty(),
+                            onValueChange = { viewModel.updateLastName(it) },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.colors(
+                                focusedIndicatorColor = Color.Black,
+                                unfocusedIndicatorColor = Color.Gray,
+                                disabledIndicatorColor = Color.LightGray,
+                                unfocusedContainerColor = Color.Transparent,
+                                focusedContainerColor = Color.Transparent
+                            )
                         )
 
                         Spacer(Modifier.height(24.dp))
@@ -244,6 +262,7 @@ contentDescription = "Profile photo",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color.Gray
                                 )
+                                var dropdownWidth by remember { mutableStateOf(0) }
                                 Box {
                                     TextField(
                                         value = user!!.gender.orEmpty(),
@@ -252,6 +271,9 @@ contentDescription = "Profile photo",
                                         singleLine = true,
                                         modifier = Modifier
                                             .fillMaxWidth()
+                                            .onGloballyPositioned { coordinates ->
+                                                dropdownWidth = coordinates.size.width
+                                            }
                                             .clickable { expanded = true },
                                         trailingIcon = {
                                             Icon(
@@ -266,21 +288,38 @@ contentDescription = "Profile photo",
                                             unfocusedContainerColor = Color.Transparent,
                                             focusedContainerColor = Color.Transparent
                                         )
-
                                     )
                                     DropdownMenu(
                                         expanded = expanded,
-                                        onDismissRequest = { expanded = false }
+                                        onDismissRequest = { expanded = false },
+                                        modifier = Modifier
+                                            .width(with(LocalDensity.current) { dropdownWidth.toDp() })
+                                            .background(MaterialTheme.colorScheme.surface)
                                     ) {
-                                        listOf("Male", "Female").forEach { option ->
-                                            DropdownMenuItem(
-                                                text = { Text(option) },
-                                                onClick = {
-                                                    viewModel.updateGender(option)
-                                                    expanded = false
-                                                }
-                                            )
-                                        }
+                                        DropdownMenuItem(
+                                            text = { 
+                                                Text(
+                                                    text = "Male",
+                                                    color = MaterialTheme.colorScheme.onSurface
+                                                ) 
+                                            },
+                                            onClick = {
+                                                viewModel.updateGender("Male")
+                                                expanded = false
+                                            }
+                                        )
+                                        DropdownMenuItem(
+                                            text = { 
+                                                Text(
+                                                    text = "Female",
+                                                    color = MaterialTheme.colorScheme.onSurface
+                                                ) 
+                                            },
+                                            onClick = {
+                                                viewModel.updateGender("Female")
+                                                expanded = false
+                                            }
+                                        )
                                     }
                                 }
                             }
